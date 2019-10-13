@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace CourseRadioPlan.Services
 {
@@ -41,10 +42,15 @@ namespace CourseRadioPlan.Services
                 var typeRow = worksheet.Descendants<Row>().Skip(13).First();
                 var numberRow = worksheet.Descendants<Row>().Skip(14).First();
 
-                var channels = this.GetChannels(document,
+                var positionAndChannelsTuple = this.GetChannels(document,
                     positionRow,
                     typeRow,
-                    numberRow).ToList();
+                    numberRow);
+
+                string position = positionAndChannelsTuple.Item1;
+                Regex numberRegex = new Regex("\\d+");
+                position = numberRegex.Replace(position, String.Empty);
+                var channels = positionAndChannelsTuple.Item2.ToList();
 
                 var radioRows = worksheet.Descendants<Row>().Skip(15);
 
@@ -87,7 +93,7 @@ namespace CourseRadioPlan.Services
             return result;
         }
 
-        private IEnumerable<ChannelModel> GetChannels(SpreadsheetDocument document, Row positionRow, Row typeRow, Row identifierRow)
+        private Tuple<string, IEnumerable<ChannelModel>> GetChannels(SpreadsheetDocument document, Row positionRow, Row typeRow, Row identifierRow)
         {
             var firstParseablePositionCell =
                 positionRow.Descendants<Cell>().FirstOrDefault(c =>
@@ -111,12 +117,12 @@ namespace CourseRadioPlan.Services
             var positionAndTypes = positionCells.Zip(typeCells);
 
 
-            return positionAndTypes.Zip(identifierCells, (typeAndPosition, identifierCell) => new ChannelModel
+            return new Tuple<string, IEnumerable<ChannelModel>>(firstParseablePositionCell.CellReference.Value, positionAndTypes.Zip(identifierCells, (typeAndPosition, identifierCell) => new ChannelModel
             {
                 Position = this.GetStringValue(typeAndPosition.First, document),
                 Type = this.GetStringValue(typeAndPosition.Second, document),
                 Number = GetStringValue(identifierCell, document)
-            }).Where(cm => !String.IsNullOrEmpty(cm.Number)).ToList();
+            }).Where(cm => !String.IsNullOrEmpty(cm.Number)).ToList());
         }
 
         private string GetStringValue(Cell c, SpreadsheetDocument document)
