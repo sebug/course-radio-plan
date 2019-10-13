@@ -71,7 +71,22 @@ namespace CourseRadioPlan.Services
                     }
                 }
 
+                if (radios.Any(r => !String.IsNullOrEmpty(r.Name)))
+                {
+                    result.IdentifyingColumNumber = 3;
+                }
+                else if (radios.Any(r => !String.IsNullOrEmpty(r.Function)))
+                {
+                    result.IdentifyingColumNumber = 2;
+                }
+                else
+                {
+                    result.IdentifyingColumNumber = 1;
+                }
+
                 result.CourseName = GetStringValue(secondCell, document);
+                result.Channels = usedChannels;
+                result.Radios = radios;
             }
             return result;
         }
