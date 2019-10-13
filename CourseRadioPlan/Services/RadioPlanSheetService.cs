@@ -56,13 +56,13 @@ namespace CourseRadioPlan.Services
 
                 var radios = this.GetRadios(document, radioRows, channels, position)
                     .Where(r => r != null)
-                    .Where(r => r.NumberToChannel != null && r.NumberToChannel.Count > 0)
+                    .Where(r => r.ChannelToNumber != null && r.ChannelToNumber.Count > 0)
                     .ToList();
 
                 List<ChannelModel> usedChannels = new List<ChannelModel>();
                 foreach (var radio in radios)
                 {
-                    foreach (var c in radio.NumberToChannel.Values)
+                    foreach (var c in radio.ChannelToNumber.Keys)
                     {
                         if (!usedChannels.Contains(c))
                         {
@@ -150,7 +150,7 @@ namespace CourseRadioPlan.Services
 
             var channelToCell = channels.Zip(channelCells);
 
-            result.NumberToChannel = new Dictionary<string, ChannelModel>();
+            result.ChannelToNumber = new Dictionary<ChannelModel, string>();
             foreach (var p in channelToCell)
             {
                 var channel = p.First;
@@ -158,7 +158,7 @@ namespace CourseRadioPlan.Services
                 string positionNumber = this.GetStringValue(cell, document);
                 if (!String.IsNullOrEmpty(positionNumber))
                 {
-                    result.NumberToChannel[positionNumber] = channel;
+                    result.ChannelToNumber[channel] = positionNumber;
                 }
             }
 
