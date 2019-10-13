@@ -38,6 +38,7 @@ namespace CourseRadioPlan.Services
                 var secondCell = fourthRow.Descendants<Cell>().Skip(1).First();
 
                 var channels = this.GetChannels(document,
+                    worksheet.Descendants<Row>().Skip(12).First(),
                     worksheet.Descendants<Row>().Skip(13).First(),
                     worksheet.Descendants<Row>().Skip(14).First());
 
@@ -46,15 +47,20 @@ namespace CourseRadioPlan.Services
             return result;
         }
 
-        private IEnumerable<ChannelModel> GetChannels(SpreadsheetDocument document, Row typeRow, Row identifierRow)
+        private IEnumerable<ChannelModel> GetChannels(SpreadsheetDocument document, Row positionRow, Row typeRow, Row identifierRow)
         {
+            var positionCells = positionRow.Descendants<Cell>().Skip(6).ToList();
             var typeCells = typeRow.Descendants<Cell>().Skip(7).ToList();
             var identifierCells = identifierRow.Descendants<Cell>().Skip(8).ToList(); // skip one more since
             // one cell above was merged
 
-            return typeCells.Zip(identifierCells, (typeCell, identifierCell) => new ChannelModel
+            var positionAndTypes = positionCells.Zip(typeCells);
+
+
+            return positionAndTypes.Zip(identifierCells, (typeAndPosition, identifierCell) => new ChannelModel
             {
-                Type = this.GetStringValue(typeCell, document),
+                Position = this.GetStringValue(typeAndPosition.First, document),
+                Type = this.GetStringValue(typeAndPosition.Second, document),
                 Number = GetStringValue(identifierCell, document)
             }).Where(cm => !String.IsNullOrEmpty(cm.Number)).ToList();
         }
