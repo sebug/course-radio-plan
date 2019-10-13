@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CourseRadioPlan.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace CourseRadioPlan.Controllers
 {
@@ -18,7 +19,7 @@ namespace CourseRadioPlan.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromForm]HomeViewModel hvm = null)
         {
             return View();
         }
