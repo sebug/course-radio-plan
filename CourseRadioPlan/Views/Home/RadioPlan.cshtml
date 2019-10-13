@@ -1,0 +1,58 @@
+﻿@model RadioPlanModel
+@if (this.Model.Channels != null && this.Model.CourseName != null &&
+     this.Model.Radios != null)
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="@(this.Model.IdentifyingColumNumber + 1)">@this.Model.CourseName</th>
+                    @foreach (var c in this.Model.Channels)
+                    {
+                        <th>@c.Type</th>
+                    }
+                </tr>
+                <tr>
+                    <th>IIII</th>
+                    @if (this.Model.IdentifyingColumNumber >= 3)
+                    {
+                        <th>Nom</th>
+                    }
+                    @if (this.Model.IdentifyingColumNumber >= 2)
+                    {
+                        <th>Fonction</th>
+                    }
+                    <th>Indicatif</th>
+                    @foreach (var c in this.Model.Channels)
+                    {
+                        <th>@c.Number</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var radio in this.Model.Radios)
+                {
+                    <tr>
+                        <td>@radio.Identifier</td>
+                        @if (this.Model.IdentifyingColumNumber >= 3)
+                        {
+                            <td>@(radio.Name ?? String.Empty)</td>
+                        }
+                        @if (this.Model.IdentifyingColumNumber >= 2)
+                        {
+                            <td>@(radio.Function ?? String.Empty)</td>
+                        }
+                        <td>@radio.Indication</td>
+                        @foreach (var c in this.Model.Channels)
+                        {
+                            <td>
+                                @if (radio.ChannelToNumber.ContainsKey(c))
+                                {
+                                    @radio.ChannelToNumber[c]
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }

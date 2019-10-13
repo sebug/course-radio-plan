@@ -4,38 +4,7 @@
 }
 @if (this.Model.RadioPlan != null)
 {
-
-    @if (this.Model.RadioPlan.Channels != null && this.Model.RadioPlan.CourseName != null &&
-     this.Model.RadioPlan.Radios != null)
-    {
-        <table>
-            <thead>
-                <tr>
-                    <th colspan="@(this.Model.RadioPlan.IdentifyingColumNumber + 1)">@this.Model.RadioPlan.CourseName</th>
-                    @foreach (var c in this.Model.RadioPlan.Channels)
-                    {
-                        <th>@c.Type</th>
-                    }
-                </tr>
-                <tr>
-                    <th>IIII</th>
-                    @if (this.Model.RadioPlan.IdentifyingColumNumber >= 3)
-                    {
-                        <th>Nom</th>
-                    }
-                    @if (this.Model.RadioPlan.IdentifyingColumNumber >= 2)
-                    {
-                        <th>Fonction</th>
-                    }
-                    <th>Indicatif</th>
-                    @foreach (var c in this.Model.RadioPlan.Channels)
-                    {
-                        <th>@c.Number</th>
-                    }
-                </tr>
-            </thead>
-        </table>
-    }
+    @await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)
 }
 else
 {
