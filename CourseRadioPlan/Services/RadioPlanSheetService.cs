@@ -4,6 +4,8 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace CourseRadioPlan.Services
 {
@@ -35,9 +37,26 @@ namespace CourseRadioPlan.Services
 
                 var secondCell = fourthRow.Descendants<Cell>().Skip(1).First();
 
+                var channels = this.GetChannels(document,
+                    worksheet.Descendants<Row>().Skip(13).First(),
+                    worksheet.Descendants<Row>().Skip(14).First());
+
                 result.CourseName = GetStringValue(secondCell, document);
             }
             return result;
+        }
+
+        private IEnumerable<ChannelModel> GetChannels(SpreadsheetDocument document, Row typeRow, Row identifierRow)
+        {
+            var typeCells = typeRow.Descendants<Cell>().Skip(7).ToList();
+            var identifierCells = identifierRow.Descendants<Cell>().Skip(8).ToList(); // skip one more since
+            // one cell above was merged
+
+            return typeCells.Zip(identifierCells, (typeCell, identifierCell) => new ChannelModel
+            {
+                Type = this.GetStringValue(typeCell, document),
+                Number = GetStringValue(identifierCell, document)
+            }).Where(cm => !String.IsNullOrEmpty(cm.Number)).ToList();
         }
 
         private string GetStringValue(Cell c, SpreadsheetDocument document)
@@ -55,7 +74,14 @@ namespace CourseRadioPlan.Services
             }
             else
             {
-                return c.CellValue.Text;
+                if (c.CellValue != null)
+                {
+                    return c.CellValue.Text;
+                }
+                else
+                {
+                    return c.InnerText;
+                }
             }
         }
     }
