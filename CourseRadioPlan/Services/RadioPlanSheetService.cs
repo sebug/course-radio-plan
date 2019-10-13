@@ -37,21 +37,75 @@ namespace CourseRadioPlan.Services
 
                 var secondCell = fourthRow.Descendants<Cell>().Skip(1).First();
 
+                var positionRow = worksheet.Descendants<Row>().Skip(12).First();
+                var typeRow = worksheet.Descendants<Row>().Skip(13).First();
+                var numberRow = worksheet.Descendants<Row>().Skip(14).First();
+
                 var channels = this.GetChannels(document,
-                    worksheet.Descendants<Row>().Skip(12).First(),
-                    worksheet.Descendants<Row>().Skip(13).First(),
-                    worksheet.Descendants<Row>().Skip(14).First());
+                    positionRow,
+                    typeRow,
+                    numberRow).ToList();
+
+                var radioRows = worksheet.Descendants<Row>().Skip(15);
+
+                var radios = this.GetRadios(document, radioRows, channels)
+                    .Where(r => r != null)
+                    .ToList();
+
+
 
                 result.CourseName = GetStringValue(secondCell, document);
             }
             return result;
         }
 
+        private IEnumerable<RadioModel> GetRadios(SpreadsheetDocument document, IEnumerable<Row> radioRows, List<ChannelModel> channels)
+        {
+            return radioRows.Select(row => this.GetRadio(document, row, channels));
+        }
+
+        private RadioModel GetRadio(SpreadsheetDocument document, Row radioRow, List<ChannelModel> channels)
+        {
+            var result = new RadioModel();
+
+            var identifierCell = radioRow.Descendants<Cell>()
+                .Where(c =>
+                {
+                    string v = this.GetStringValue(c, document);
+                    if (v != null && v.Length == 4)
+                    {
+                        return true;
+                    }
+                    return false;
+                }).FirstOrDefault();
+
+            if (identifierCell == null)
+            {
+                return null;
+            }
+
+            return result;
+        }
+
         private IEnumerable<ChannelModel> GetChannels(SpreadsheetDocument document, Row positionRow, Row typeRow, Row identifierRow)
         {
-            var positionCells = positionRow.Descendants<Cell>().Skip(6).ToList();
-            var typeCells = typeRow.Descendants<Cell>().Skip(7).ToList();
-            var identifierCells = identifierRow.Descendants<Cell>().Skip(8).ToList(); // skip one more since
+            var firstParseablePositionCell =
+                positionRow.Descendants<Cell>().FirstOrDefault(c =>
+                {
+                    string t = this.GetStringValue(c, document);
+                    int res;
+                    return int.TryParse(t, out res);
+                });
+
+            if (firstParseablePositionCell == null)
+            {
+                throw new Exception("Did not find the first position cell");
+            }
+            int idx = positionRow.Descendants<Cell>().ToList().IndexOf(firstParseablePositionCell);
+
+            var positionCells = positionRow.Descendants<Cell>().Skip(idx).ToList();
+            var typeCells = typeRow.Descendants<Cell>().Skip(idx + 1).ToList();
+            var identifierCells = identifierRow.Descendants<Cell>().Skip(idx + 2).ToList(); // skip one more since
             // one cell above was merged
 
             var positionAndTypes = positionCells.Zip(typeCells);
