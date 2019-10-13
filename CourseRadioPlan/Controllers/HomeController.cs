@@ -7,20 +7,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CourseRadioPlan.Models;
 using Microsoft.AspNetCore.Http;
+using CourseRadioPlan.Services;
 
 namespace CourseRadioPlan.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IRadioPlanSheetService _radioPlanSheetService;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+            IRadioPlanSheetService radioPlanSheetService)
         {
             _logger = logger;
+            this._radioPlanSheetService = radioPlanSheetService;
         }
 
         public IActionResult Index([FromForm]HomeViewModel hvm = null)
         {
+            if (hvm != null && hvm.ExcelFile != null)
+            {
+                string result = this._radioPlanSheetService.GenerateFromFile(hvm.ExcelFile);
+                return Content(result, "text/html");
+            }
             return View();
         }
 
