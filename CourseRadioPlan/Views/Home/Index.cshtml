@@ -1,10 +1,23 @@
 ﻿@model HomeViewModel
 @{
     ViewData["Title"] = "Home Page";
+    ViewData["ShowChrome"] = this.Model.RadioPlan == null;
 }
 @if (this.Model.RadioPlan != null)
 {
-    @await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+        </div>
+    </div>
+    
 }
 else
 {
