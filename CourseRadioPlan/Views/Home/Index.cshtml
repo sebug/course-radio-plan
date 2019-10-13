@@ -1,8 +1,14 @@
-﻿@{
+﻿@model HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<h1>Course Radio Plan</h1>
+@if (this.Model.CourseName != null)
+{
+    <h1>@this.Model.CourseName</h1>
+}
+else
+{
+    <h1>Course Radio Plan</h1>
 <p>Upload a file below from which the A4 sheet should be created.</p>
 
 <form method="post" enctype="multipart/form-data">
@@ -10,3 +16,6 @@
 
 <button type="submit">Submit</button>
 </form>
+
+}
+

@@ -11,14 +11,7 @@ namespace CourseRadioPlan.Services
 
         public string GenerateFromFile(IFormFile formFile)
         {
-            return "<html>" +
-                "<head>" +
-                "<title>The Sheet</title>" +
-                "</head>" +
-                "<body>" +
-                "<h1>Ohai, world</h1>" +
-                "</body>" +
-                "</html>";
+            return "Course name already";
         }
     }
 }

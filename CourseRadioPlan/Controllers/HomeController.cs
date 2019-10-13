@@ -25,12 +25,16 @@ namespace CourseRadioPlan.Controllers
 
         public IActionResult Index([FromForm]HomeViewModel hvm = null)
         {
-            if (hvm != null && hvm.ExcelFile != null)
+            if (hvm == null)
             {
-                string result = this._radioPlanSheetService.GenerateFromFile(hvm.ExcelFile);
-                return Content(result, "text/html");
+                hvm = new HomeViewModel();
             }
-            return View();
+            if (hvm.ExcelFile != null)
+            {
+                hvm.CourseName = this._radioPlanSheetService.GenerateFromFile(hvm.ExcelFile);
+                return View(hvm);
+            }
+            return View(hvm);
         }
 
         public IActionResult Privacy()
