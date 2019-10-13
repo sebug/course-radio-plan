@@ -8,11 +8,11 @@
                     <th colspan="@(this.Model.IdentifyingColumNumber + 1)">@this.Model.CourseName</th>
                     @foreach (var c in this.Model.Channels)
                     {
-                        <th>@c.Type</th>
+                        <th class="grp">@c.Type</th>
                     }
                 </tr>
                 <tr>
-                    <th>IIII</th>
+                    <th class="identifier">IIII</th>
                     @if (this.Model.IdentifyingColumNumber >= 3)
                     {
                         <th>Nom</th>
@@ -24,7 +24,7 @@
                     <th>Indicatif</th>
                     @foreach (var c in this.Model.Channels)
                     {
-                        <th>@c.Number</th>
+                        <th class="grp">@c.Number</th>
                     }
                 </tr>
             </thead>
@@ -32,19 +32,19 @@
                 @foreach (var radio in this.Model.Radios)
                 {
                     <tr>
-                        <td>@radio.Identifier</td>
+                        <td class="identifier">@radio.Identifier</td>
                         @if (this.Model.IdentifyingColumNumber >= 3)
                         {
-                            <td>@(radio.Name ?? String.Empty)</td>
+                            <td class="maincell">@(radio.Name ?? String.Empty)</td>
                         }
                         @if (this.Model.IdentifyingColumNumber >= 2)
                         {
-                            <td>@(radio.Function ?? String.Empty)</td>
+                            <td class="maincell">@(radio.Function ?? String.Empty)</td>
                         }
-                        <td>@radio.Indication</td>
+                        <td class="maincell">@radio.Indication</td>
                         @foreach (var c in this.Model.Channels)
                         {
-                            <td>
+                            <td class="number">
                                 @if (radio.ChannelToNumber.ContainsKey(c))
                                 {
                                     @radio.ChannelToNumber[c]

@@ -69,3 +69,38 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+div.container {
+                max-width: none;
+            }
+            table.radio-plan {
+                margin-top: 10px;
+                border-collapse: collapse;
+            }
+            table.radio-plan td, table.radio-plan th {
+                border-style: solid;
+                border-width: 1px;
+            }
+            table.radio-plan > tbody > tr > td.identifier, table.radio-plan > thead > tr > th.identifier {
+                background-color: #fffa38ff !important;
+            }
+            table.radio-plan > tbody > tr > td.grp, table.radio-plan > thead > tr > th.grp {
+                background-color: #cdfcceff !important;
+            }
+            table.radio-plan > tbody > tr > td.maincell, table.radio-plan > thead > tr > th.maincell {
+                background-color: #fecb9cff !important;
+            }
+            table.radio-plan .number {
+                text-align: center;
+            }
+            @media print {
+                table.radio-plan > tbody > tr > td.identifier, table.radio-plan > thead > tr > th.identifier {
+                background-color: #fffa38ff !important;
+            }
+            table.radio-plan > tbody > tr > td.grp, table.radio-plan > thead > tr > th.grp {
+                background-color: #cdfcceff !important;
+            }
+            table.radio-plan > tbody > tr > td.maincell, table.radio-plan > thead > tr > th.maincell {
+                background-color: #fecb9cff !important;
+            }
+            }
