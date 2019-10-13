@@ -56,9 +56,20 @@ namespace CourseRadioPlan.Services
 
                 var radios = this.GetRadios(document, radioRows, channels, position)
                     .Where(r => r != null)
+                    .Where(r => r.NumberToChannel != null && r.NumberToChannel.Count > 0)
                     .ToList();
 
-
+                List<ChannelModel> usedChannels = new List<ChannelModel>();
+                foreach (var radio in radios)
+                {
+                    foreach (var c in radio.NumberToChannel.Values)
+                    {
+                        if (!usedChannels.Contains(c))
+                        {
+                            usedChannels.Add(c);
+                        }
+                    }
+                }
 
                 result.CourseName = GetStringValue(secondCell, document);
             }
@@ -129,6 +140,26 @@ namespace CourseRadioPlan.Services
             if (functionCell != null)
             {
                 result.Function = this.GetStringValue(functionCell, document);
+            }
+
+            // now for channels
+            var channelCells = radioRow.Descendants<Cell>()
+                .SkipWhile(c => !c.CellReference.Value.StartsWith(channelsPosition, StringComparison.InvariantCultureIgnoreCase))
+                .Take(channels.Count)
+                .ToList();
+
+            var channelToCell = channels.Zip(channelCells);
+
+            result.NumberToChannel = new Dictionary<string, ChannelModel>();
+            foreach (var p in channelToCell)
+            {
+                var channel = p.First;
+                var cell = p.Second;
+                string positionNumber = this.GetStringValue(cell, document);
+                if (!String.IsNullOrEmpty(positionNumber))
+                {
+                    result.NumberToChannel[positionNumber] = channel;
+                }
             }
 
             return result;
