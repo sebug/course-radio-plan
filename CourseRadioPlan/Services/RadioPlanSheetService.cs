@@ -54,7 +54,7 @@ namespace CourseRadioPlan.Services
 
                 var radioRows = worksheet.Descendants<Row>().Skip(15);
 
-                var radios = this.GetRadios(document, radioRows, channels)
+                var radios = this.GetRadios(document, radioRows, channels, position)
                     .Where(r => r != null)
                     .ToList();
 
@@ -65,12 +65,13 @@ namespace CourseRadioPlan.Services
             return result;
         }
 
-        private IEnumerable<RadioModel> GetRadios(SpreadsheetDocument document, IEnumerable<Row> radioRows, List<ChannelModel> channels)
+        private IEnumerable<RadioModel> GetRadios(SpreadsheetDocument document, IEnumerable<Row> radioRows, List<ChannelModel> channels, string channelsPosition)
         {
-            return radioRows.Select(row => this.GetRadio(document, row, channels));
+            return radioRows.Select(row => this.GetRadio(document, row, channels, channelsPosition));
         }
 
-        private RadioModel GetRadio(SpreadsheetDocument document, Row radioRow, List<ChannelModel> channels)
+        private RadioModel GetRadio(SpreadsheetDocument document, Row radioRow, List<ChannelModel> channels,
+            string channelsPosition)
         {
             var result = new RadioModel();
 
@@ -88,6 +89,46 @@ namespace CourseRadioPlan.Services
             if (identifierCell == null)
             {
                 return null;
+            }
+
+            var inBetweenCells = radioRow.Descendants<Cell>()
+                .SkipWhile(c => c != identifierCell).TakeWhile(c => !c.CellReference.Value.StartsWith(channelsPosition, StringComparison.InvariantCultureIgnoreCase))
+                .ToList();
+
+            result.Identifier = this.GetStringValue(identifierCell, document);
+            Cell nameCell = null;
+            Cell functionCell = null;
+            Cell indicationCell = null;
+            if (inBetweenCells.Count >= 4)
+            {
+                // name, function, indication
+                nameCell = inBetweenCells[1];
+                functionCell = inBetweenCells[2];
+                indicationCell = inBetweenCells[3];
+            }
+            else if (inBetweenCells.Count >= 3)
+            {
+                // function and indication
+                functionCell = inBetweenCells[1];
+                indicationCell = inBetweenCells[2];
+            }
+            else if (inBetweenCells.Count >= 2)
+            {
+                // indication
+                indicationCell = inBetweenCells[1];
+            }
+
+            if (indicationCell != null)
+            {
+                result.Indication = this.GetStringValue(indicationCell, document);
+            }
+            if (nameCell != null)
+            {
+                result.Name = this.GetStringValue(nameCell, document);
+            }
+            if (functionCell != null)
+            {
+                result.Function = this.GetStringValue(functionCell, document);
             }
 
             return result;
