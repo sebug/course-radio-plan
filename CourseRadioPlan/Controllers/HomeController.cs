@@ -31,7 +31,7 @@ namespace CourseRadioPlan.Controllers
             }
             if (hvm.ExcelFile != null)
             {
-                hvm.CourseName = this._radioPlanSheetService.GenerateFromFile(hvm.ExcelFile);
+                hvm.RadioPlan = this._radioPlanSheetService.GenerateFromFile(hvm.ExcelFile);
                 return View(hvm);
             }
             return View(hvm);

@@ -1,10 +1,11 @@
 ﻿using System;
+using CourseRadioPlan.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace CourseRadioPlan.Services
 {
     public interface IRadioPlanSheetService
     {
-        string GenerateFromFile(IFormFile formFile);
+        RadioPlanModel GenerateFromFile(IFormFile formFile);
     }
 }

@@ -7,6 +7,6 @@ namespace CourseRadioPlan.Models
     {
         public IFormFile ExcelFile { get; set; }
 
-        public string CourseName { get; set; }
+        public RadioPlanModel RadioPlan { get; set; }
     }
 }

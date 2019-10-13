@@ -1,4 +1,5 @@
 ﻿using System;
+using CourseRadioPlan.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace CourseRadioPlan.Services
@@ -9,9 +10,13 @@ namespace CourseRadioPlan.Services
         {
         }
 
-        public string GenerateFromFile(IFormFile formFile)
+        public RadioPlanModel GenerateFromFile(IFormFile formFile)
         {
-            return "Course name already";
+            var result = new RadioPlanModel
+            {
+                CourseName = "The course name"
+            };
+            return result;
         }
     }
 }

@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-@if (this.Model.CourseName != null)
+@if (this.Model.RadioPlan != null)
 {
-    <h1>@this.Model.CourseName</h1>
+    <h1>@this.Model.RadioPlan.CourseName</h1>
 }
 else
 {
