@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  courseradioplan:
+    image: ${DOCKER_REGISTRY-}courseradioplan
+    build:
+      context: .
+      dockerfile: ./Dockerfile

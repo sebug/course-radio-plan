@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseRadioPlan", "CourseRadioPlan.csproj", "{E31815EE-92BB-44C6-BB57-A6128C5F9CAC}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{267A6138-198D-4E9B-A8AE-90A9ADF97B50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +15,9 @@ Global
 		{E31815EE-92BB-44C6-BB57-A6128C5F9CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E31815EE-92BB-44C6-BB57-A6128C5F9CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E31815EE-92BB-44C6-BB57-A6128C5F9CAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{267A6138-198D-4E9B-A8AE-90A9ADF97B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{267A6138-198D-4E9B-A8AE-90A9ADF97B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{267A6138-198D-4E9B-A8AE-90A9ADF97B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{267A6138-198D-4E9B-A8AE-90A9ADF97B50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
