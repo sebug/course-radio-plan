@@ -1,0 +1,6 @@
+version: '3'
+services:
+  radioplan:
+    image: "sebug/course-radio-plan:336"
+    ports:
+     - "9080:80"
