@@ -35,6 +35,7 @@
             <rect x="0" y="0" height="950" width="1000" class="plan-placeholder"></rect>
             <foreignObject x="0" y="0" height="950" width="1000" class="plan-object plan-object-1">
                 <style>
+
                     .plan-object-1 table.radio-plan {
                         width: 500px;
                         font-size: 12px;
@@ -45,6 +46,7 @@
             </foreignObject>
             <foreignObject x="1000" y="0" height="950" width="1000" class="plan-object plan-object-2">
                 <style>
+
                     .plan-object-2 table.radio-plan {
                         width: 500px;
                         font-size: 12px;
@@ -54,6 +56,32 @@
                 @await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)
             </foreignObject>
             <rect x="1000" y="0" height="950" width="1000" class="plan-placeholder"></rect>
+
+
+            <rect x="0" y="950" height="950" width="1000" class="plan-placeholder"></rect>
+            <foreignObject x="0" y="950" height="950" width="1000" class="plan-object plan-object-3">
+                <style>
+
+                    .plan-object-3 table.radio-plan {
+                        width: 500px;
+                        font-size: 12px;
+                        transform: rotateZ(-90deg) scale(0.715, 0.715) translateY(-150px) translateX(848px);
+                    }
+                </style>
+                @await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)
+            </foreignObject>
+            <foreignObject x="1000" y="950" height="950" width="1000" class="plan-object plan-object-4">
+                <style>
+
+                    .plan-object-4 table.radio-plan {
+                        width: 500px;
+                        font-size: 12px;
+                        transform: rotateZ(-90deg) scale(0.715, 0.715) translateY(-1025px) translateX(848px);
+                    }
+                </style>
+                @await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)
+            </foreignObject>
+            <rect x="1000" y="950" height="950" width="1000" class="plan-placeholder"></rect>
         </svg>
     }
     else
