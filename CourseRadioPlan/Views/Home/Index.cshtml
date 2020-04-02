@@ -6,40 +6,46 @@
 @if (this.Model.RadioPlan != null)
 {
     <style>
-        
-            body {
-                line-height: 1;
-                font-size: 8px;
-            }
+
+        body {
+            line-height: 1;
+            font-size: 8px;
+        }
 
         table.radio-plan {
             width: 350px;
         }
     </style>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
-            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
-            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+    @if (this.Model.RadioPlan.UseSVG)
+    {
+
+    }
+    else
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+                <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+                <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+                <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+                <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
-            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
-            <div class="col-md-4">@await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)</div>
-        </div>
-    </div>
-    
-}
+        }
+    }
 else
 {
     <h1>Course Radio Plan</h1>
-<p>Upload a file below from which the A4 sheet should be created.</p>
+    <p>Upload a file below from which the A4 sheet should be created.</p>
 
-<form method="post" enctype="multipart/form-data">
-    <input type="file" name="ExcelFile" />
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="ExcelFile" />
 
-<button type="submit">Submit</button>
-</form>
+        <button type="submit">Submit</button>
+    </form>
 
 }
 
