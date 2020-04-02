@@ -22,20 +22,39 @@
             svg.radio-container {
                 width: 28.5cm;
                 height: 20cm;
-                border: 1px solid black;
             }
             rect.plan-placeholder {
                 fill-opacity: 0;
-                stroke: black;
+                
+            }
+            foreignObject.plan-object {
             }
         </style>
-        <svg class="radio-container" viewBox="0 0 285 200">
-            <rect x="0" y="0" width="95" height="100" class="plan-placeholder"></rect>
-            <rect x="95" y="0" width="95" height="100" class="plan-placeholder"></rect>
-            <rect x="190" y="0" width="95" height="100" class="plan-placeholder"></rect>
-            <rect x="0" y="100" width="95" height="100" class="plan-placeholder"></rect>
-            <rect x="95" y="100" width="95" height="100" class="plan-placeholder"></rect>
-            <rect x="190" y="100" width="95" height="100" class="plan-placeholder"></rect>
+        <svg class="radio-container" viewBox="0 0 2850 2000">
+            <rect x="0" y="0" width="950" height="1000" class="plan-placeholder"></rect>
+            <foreignObject x="0" y="0" width="950" height="1000" class="plan-object">
+                @await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)
+            </foreignObject>
+            <rect x="950" y="0" width="950" height="1000" class="plan-placeholder"></rect>
+            <foreignObject x="950" y="0" width="950" height="1000" class="plan-object">
+                @await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)
+            </foreignObject>
+            <rect x="1900" y="0" width="950" height="1000" class="plan-placeholder"></rect>
+            <foreignObject x="1900" y="0" width="950" height="1000" class="plan-object">
+                @await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)
+            </foreignObject>
+            <rect x="0" y="1000" width="950" height="1000" class="plan-placeholder"></rect>
+            <foreignObject x="0" y="1000" width="950" height="1000" class="plan-object">
+                @await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)
+            </foreignObject>
+            <rect x="950" y="1000" width="950" height="1000" class="plan-placeholder"></rect>
+            <foreignObject x="950" y="1000" width="950" height="1000" class="plan-object">
+                @await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)
+            </foreignObject>
+            <rect x="1900" y="1000" width="950" height="1000" class="plan-placeholder"></rect>
+            <foreignObject x="1900" y="1000" width="950" height="1000" class="plan-object">
+                @await Html.PartialAsync("~/Views/Home/RadioPlan.cshtml", this.Model.RadioPlan)
+            </foreignObject>
         </svg>
     }
     else

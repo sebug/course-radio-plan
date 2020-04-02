@@ -1,10 +1,68 @@
 ﻿@model RadioPlanModel
 @if (this.Model.Channels != null && this.Model.CourseName != null &&
-    this.Model.Radios != null)
+   this.Model.Radios != null)
 {
     @if (this.Model.UseSVG)
     {
-
+        <style>
+            table.radio-plan {
+                width: 950px;
+                font-size: 26px;
+            }
+        </style>
+        <table class="radio-plan">
+            <thead>
+                <tr>
+                    <th colspan="@(this.Model.IdentifyingColumNumber + 1)">@this.Model.CourseName</th>
+                    @foreach (var c in this.Model.Channels)
+                    {
+                        <th class="grp">@c.Type</th>
+                    }
+                </tr>
+                <tr>
+                    <th class="identifier">IIII</th>
+                    @if (this.Model.IdentifyingColumNumber >= 3)
+                    {
+                        <th>Nom</th>
+                    }
+                    @if (this.Model.IdentifyingColumNumber >= 2)
+                    {
+                        <th>Fonction</th>
+                    }
+                    <th>Indicatif</th>
+                    @foreach (var c in this.Model.Channels)
+                    {
+                        <th class="grp">@c.Number</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var radio in this.Model.Radios)
+                {
+                    <tr>
+                        <td class="identifier">@radio.Identifier</td>
+                        @if (this.Model.IdentifyingColumNumber >= 3)
+                        {
+                            <td class="maincell">@(radio.Name ?? String.Empty)</td>
+                        }
+                        @if (this.Model.IdentifyingColumNumber >= 2)
+                        {
+                            <td class="maincell">@(radio.Function ?? String.Empty)</td>
+                        }
+                        <td class="maincell">@radio.Indication</td>
+                        @foreach (var c in this.Model.Channels)
+                        {
+                            <td class="number">
+                                @if (radio.ChannelToNumber.ContainsKey(c))
+                                {
+                                    @radio.ChannelToNumber[c]
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
     else
     {
