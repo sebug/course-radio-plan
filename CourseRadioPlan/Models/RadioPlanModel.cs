@@ -9,5 +9,6 @@ namespace CourseRadioPlan.Models
         public List<ChannelModel> Channels { get; set; }
         public List<RadioModel> Radios { get; set; }
         public int IdentifyingColumNumber { get; set; }
+        public bool UseSVG { get; set; }
     }
 }

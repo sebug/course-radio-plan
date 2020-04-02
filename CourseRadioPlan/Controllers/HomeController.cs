@@ -32,6 +32,7 @@ namespace CourseRadioPlan.Controllers
             if (hvm.ExcelFile != null)
             {
                 hvm.RadioPlan = this._radioPlanSheetService.GenerateFromFile(hvm.ExcelFile);
+                hvm.RadioPlan.UseSVG = true;
                 return View(hvm);
             }
             return View(hvm);
